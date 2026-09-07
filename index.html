@@ -1517,7 +1517,79 @@
      class="floating-whatsapp" 
      aria-label="Wöhrl Tiefbau direkt per WhatsApp kontaktieren">
     <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.632.062-1.745-.398-.997-.412-1.674-1.39-1.724-1.458-.049-.068-.415-.552-.415-1.053 0-.5.263-.746.357-.849.094-.103.205-.13.274-.13.069 0 .138.002.198.005.064.004.148-.024.231.174.086.205.294.717.32.771.026.054.043.118.007.189-.036.071-.054.116-.107.178-.054.063-.113.14-.162.188-.053.053-.109.11-.047.217.062.107.276.455.592.736.407.362.75.474.856.527.107.054.169.045.231-.027.063-.071.27-.315.342-.423.072-.107.144-.089.24-.054.097.036.618.291.724.344.106.054.177.08.204.125.026.044.026.257-.118.662zM12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.954-1.397A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.63 0-3.149-.49-4.423-1.334l-.317-.208-2.943.83.843-2.85-.224-.337A7.954 7.954 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
-  </a>
+  <!-- ══════════════════════════════════════════════════════════════
+       KI-ASSISTENT TRIGGER & CHAT WINDOW
+       ══════════════════════════════════════════════════════════════ -->
+  <button type="button" id="aiAssistantTrigger" class="ai-assistant-btn" aria-label="Wöhrl Tiefbau KI-Berater öffnen" aria-expanded="false" aria-controls="aiChatWindow">
+    <div class="relative w-7 h-7 rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-slate-950 font-bold text-sm shadow-md">
+      <span>🤖</span>
+      <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-slate-900 animate-pulse"></span>
+    </div>
+    <span class="font-display font-semibold text-xs sm:text-sm tracking-wide text-white flex items-center gap-1.5">
+      <span>KI-Berater</span>
+      <span class="hidden sm:inline text-amber-400 text-[11px] font-mono">Online</span>
+    </span>
+  </button>
+
+  <!-- KI Chat Fenster -->
+  <div id="aiChatWindow" class="ai-chat-window" role="dialog" aria-modal="false" aria-labelledby="aiChatTitle">
+    <!-- Header -->
+    <div class="ai-chat-header">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center text-lg font-bold">
+          🤖
+        </div>
+        <div>
+          <h3 id="aiChatTitle" class="text-sm font-bold text-white flex items-center gap-2">
+            Wöhrl KI-Berater
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">KI 2.0</span>
+          </h3>
+          <p class="text-[11px] text-emerald-400 flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Tiefbau-Experte • Antwortet sofort
+          </p>
+        </div>
+      </div>
+      <button type="button" id="aiChatCloseBtn" class="p-1.5 rounded-lg text-slate-400 hover:text-white bg-slate-800/80 hover:bg-slate-700 transition-colors" aria-label="Chat schließen">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <!-- Häufige Fragen (Auf- / Zuklappbar) -->
+    <div class="ai-faq-bar">
+      <button type="button" id="aiFaqToggle" class="ai-faq-toggle-btn">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Häufige Fragen
+        </span>
+        <span id="aiFaqToggleIcon" class="text-xs">▲</span>
+      </button>
+      <div id="aiFaqChips" class="ai-faq-chips">
+        <button type="button" class="ai-faq-chip" data-question="Welche Leistungen bietet Wöhrl Tiefbau an?">Welche Leistungen bieten Sie an?</button>
+        <button type="button" class="ai-faq-chip" data-question="Wie berechne ich das Aushubvolumen für eine Baugrube?">Wie berechne ich die Kubatur?</button>
+        <button type="button" class="ai-faq-chip" data-question="Führen Sie Kanaldichtheitsprüfungen nach DIN EN 1610 durch?">Kanalprüfung DIN EN 1610?</button>
+        <button type="button" class="ai-faq-chip" data-question="Suchen Sie aktuell Baggerfahrer oder Straßenbauer?">Jobs / Baggerfahrer gesucht?</button>
+        <button type="button" class="ai-faq-chip" data-question="Wo befindet sich der Firmensitz und wie sind die Öffnungszeiten?">Standort &amp; Öffnungszeiten?</button>
+      </div>
+    </div>
+
+    <!-- Chat Messages Scroll Container -->
+    <div id="aiChatMessages" class="ai-chat-messages">
+      <!-- Willkommensnachricht -->
+      <div class="ai-msg ai-msg-assistant">
+        Hallo! Ich bin der digitale Fachberater der <strong>Wöhrl Tiefbau GmbH</strong> in Regensburg. 🚜<br><br>
+        Haben Sie Fragen zu <strong>Baugrubenaushub, Kanalbau nach DIN EN 1610, Gewerbepflasterung</strong> oder unserem Maschinenpark? Wählen Sie oben eine Frage oder schreiben Sie mir einfach!
+      </div>
+    </div>
+
+    <!-- Eingabe-Leiste -->
+    <form id="aiChatForm" class="ai-chat-input-area" onsubmit="return handleAiChatSubmit(event)">
+      <input type="text" id="aiChatInput" class="ai-chat-input" placeholder="Frage zu Tiefbau, Baugrube, Preisen..." autocomplete="off" required>
+      <button type="submit" class="ai-chat-send-btn" aria-label="Nachricht senden">
+        <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </button>
+    </form>
+  </div>
 
   <!-- ══════════════════════════════════════════════════════════════
        EXTERNAL SCRIPTS: LENIS & GSAP (§ 1 Tech-Stack)

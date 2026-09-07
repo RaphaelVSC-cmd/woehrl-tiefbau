@@ -474,8 +474,257 @@ Bitte um Rückmeldung bzgl. Machbarkeit und Kostenschätzung.`;
       if (impressumModal && impressumModal.classList.contains('active')) closeModal(impressumModal);
       if (datenschutzModal && datenschutzModal.classList.contains('active')) closeModal(datenschutzModal);
       if (mobileNavOverlay && mobileNavOverlay.classList.contains('active')) toggleMobileMenu();
+      const aiChatWin = document.getElementById('aiChatWindow');
+      if (aiChatWin && aiChatWin.classList.contains('active')) {
+        aiChatWin.classList.remove('active');
+        const trigger = document.getElementById('aiAssistantTrigger');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      }
     }
   });
+
+  // ══════════════════════════════════════════════════════════════
+  // 8. KI-ASSISTENT & INTELLIGENTE Q&A-ENGINE
+  // ══════════════════════════════════════════════════════════════
+  const aiAssistantTrigger = document.getElementById('aiAssistantTrigger');
+  const aiChatWindow = document.getElementById('aiChatWindow');
+  const aiChatCloseBtn = document.getElementById('aiChatCloseBtn');
+  const aiFaqToggle = document.getElementById('aiFaqToggle');
+  const aiFaqChips = document.getElementById('aiFaqChips');
+  const aiFaqToggleIcon = document.getElementById('aiFaqToggleIcon');
+  const aiChatMessages = document.getElementById('aiChatMessages');
+  const aiChatInput = document.getElementById('aiChatInput');
+  const aiFaqChipBtns = document.querySelectorAll('.ai-faq-chip');
+
+  // Toggle Chatfenster
+  function toggleAiChat() {
+    if (!aiChatWindow) return;
+    const isActive = aiChatWindow.classList.toggle('active');
+    if (aiAssistantTrigger) aiAssistantTrigger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+    if (isActive && aiChatInput) {
+      setTimeout(() => aiChatInput.focus(), 300);
+    }
+  }
+
+  if (aiAssistantTrigger) aiAssistantTrigger.addEventListener('click', toggleAiChat);
+  if (aiChatCloseBtn) aiChatCloseBtn.addEventListener('click', toggleAiChat);
+
+  // Klick außerhalb schließt Chat auf Desktop
+  document.addEventListener('click', (e) => {
+    if (aiChatWindow && aiChatWindow.classList.contains('active')) {
+      if (!aiChatWindow.contains(e.target) && !aiAssistantTrigger.contains(e.target)) {
+        aiChatWindow.classList.remove('active');
+        if (aiAssistantTrigger) aiAssistantTrigger.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  // Häufige Fragen Auf- / Zuklappen
+  if (aiFaqToggle && aiFaqChips) {
+    aiFaqToggle.addEventListener('click', () => {
+      const isCollapsed = aiFaqChips.classList.toggle('collapsed');
+      if (aiFaqToggleIcon) aiFaqToggleIcon.textContent = isCollapsed ? '▼' : '▲';
+    });
+  }
+
+  // Klick auf FAQ-Chip
+  aiFaqChipBtns.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const question = chip.dataset.question || chip.textContent.trim();
+      processUserQuery(question);
+    });
+  });
+
+  // Chat-Verarbeitung
+  window.handleAiChatSubmit = function(event) {
+    event.preventDefault();
+    if (!aiChatInput) return false;
+    const query = aiChatInput.value.trim();
+    if (!query) return false;
+    aiChatInput.value = '';
+    processUserQuery(query);
+    return false;
+  };
+
+  function appendMessage(text, isUser = false, actions = []) {
+    if (!aiChatMessages) return;
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `ai-msg ${isUser ? 'ai-msg-user' : 'ai-msg-assistant'}`;
+    msgDiv.innerHTML = text;
+
+    if (actions && actions.length > 0) {
+      const actionContainer = document.createElement('div');
+      actionContainer.className = 'ai-quick-actions';
+      actions.forEach(act => {
+        const btn = document.createElement('a');
+        btn.className = 'ai-quick-action-btn';
+        btn.href = act.href;
+        btn.innerHTML = act.label;
+        if (act.target) btn.target = act.target;
+        if (act.rel) btn.rel = act.rel;
+        btn.addEventListener('click', () => {
+          if (act.href.startsWith('#')) {
+            aiChatWindow.classList.remove('active');
+            if (aiAssistantTrigger) aiAssistantTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+        actionContainer.appendChild(btn);
+      });
+      msgDiv.appendChild(actionContainer);
+    }
+
+    aiChatMessages.appendChild(msgDiv);
+    aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+  }
+
+  function showTypingIndicator() {
+    if (!aiChatMessages) return null;
+    const indicator = document.createElement('div');
+    indicator.id = 'aiTypingIndicator';
+    indicator.className = 'ai-typing-indicator';
+    indicator.innerHTML = '<div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div>';
+    aiChatMessages.appendChild(indicator);
+    aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    return indicator;
+  }
+
+  function removeTypingIndicator() {
+    const indicator = document.getElementById('aiTypingIndicator');
+    if (indicator) indicator.remove();
+  }
+
+  function processUserQuery(rawText) {
+    appendMessage(rawText, true);
+    showTypingIndicator();
+
+    setTimeout(() => {
+      removeTypingIndicator();
+      const response = generateAiAnswer(rawText.toLowerCase());
+      appendMessage(response.text, false, response.actions);
+    }, 400);
+  }
+
+  // Intelligente NLP-Wissensdatenbank für Wöhrl Tiefbau GmbH
+  function generateAiAnswer(q) {
+    // 1. Leistungen & Schwerpunkte
+    if (q.includes('leistung') || q.includes('angebot') || q.includes('was macht') || q.includes('portfolio')) {
+      return {
+        text: `Die <strong>Wöhrl Tiefbau GmbH</strong> deckt alle zentralen Tiefbau-Gewerke meisterhaft ab:<br>
+• <strong>Baugruben &amp; Erdbewegungen:</strong> Lasergestützter Aushub für Keller, Häuser &amp; Hallen<br>
+• <strong>Kanalbau &amp; Entwässerung:</strong> Hausanschlüsse, Schächte &amp; Zisternen nach DIN EN 1610<br>
+• <strong>Straßen- &amp; Asphaltbau:</strong> Tragschichten, Walzasphalt, Rinnen- &amp; Bordsteine<br>
+• <strong>Hof- &amp; Gewerbepflaster:</strong> Schwerlastverbundpflaster für Höfe, Parkplätze &amp; Einfahrten<br>
+• <strong>Sparten- &amp; Leitungsbau:</strong> Trassen für Wasser, Strom, Gas &amp; Glasfaser`,
+        actions: [
+          { label: '📐 Zum Projekt-Rechner', href: '#konfigurator' },
+          { label: '🛠️ Leistungen ansehen', href: '#leistungen' }
+        ]
+      };
+    }
+
+    // 2. Kubatur & Aushubberechnung
+    if (q.includes('kubatur') || q.includes('aushub') || q.includes('volumen') || q.includes('m3') || q.includes('m²') || q.includes('berechnen') || q.includes('rechner')) {
+      return {
+        text: `Das Aushubvolumen berechnet sich nach der Formel:<br>
+<strong>Grundfläche (m²) × Grabtiefe (m) = Netto-Kubatur (m³)</strong>.<br><br>
+Beachten Sie bei der Entsorgung den <strong>Auflockerungsfaktor (+25%)</strong> sowie die Bodenklasse (Sand, Lehm oder Fels). Nutzen Sie direkt unseren interaktiven 4-Schritte-Rechner, um Aushubmenge, Tonnage und LKW-Fuhren live zu berechnen!`,
+        actions: [
+          { label: '🚜 Jetzt Kubatur berechnen', href: '#konfigurator' }
+        ]
+      };
+    }
+
+    // 3. Kosten & Preise
+    if (q.includes('preis') || q.includes('kosten') || q.includes('kostenvoranschlag') || q.includes('teuer') || q.includes('angebot')) {
+      return {
+        text: `Die Kosten im Tiefbau hängen von <strong>Kubatur, Bodenklasse (1–7), Zugänglichkeit der Baustelle und Entsorgungsnachweisen</strong> ab.<br><br>
+Wir erstellen Ihnen nach Prüfung Ihrer Daten ein transparentes, faires <strong>Festpreis-Angebot</strong> ohne versteckte Überraschungen. Nutzen Sie unseren Rechner für eine erste Bedarfsanalyse!`,
+        actions: [
+          { label: '📋 Angebot kalkulieren', href: '#konfigurator' },
+          { label: '📞 0941 7803769 anrufen', href: 'tel:+499417803769' }
+        ]
+      };
+    }
+
+    // 4. Kanalbau & DIN EN 1610
+    if (q.includes('kanal') || q.includes('din') || q.includes('1610') || q.includes('dichtheit') || q.includes('rohr') || q.includes('abwasser') || q.includes('zisterne')) {
+      return {
+        text: `Ja! Wir führen <strong>fachgerechten Kanal- und Leitungsbau nach DIN EN 1610</strong> durch.<br><br>
+Inklusive normgerechter <strong>Druckprüfung mit Luft oder Wasser</strong> und offiziellem Prüfprotokoll für Kommunen, Stadtwerke und Bauabnahmen. Auch Regenwasserzisternen bis 15.000 Liter bauen wir fachgerecht ein.`,
+        actions: [
+          { label: '🚰 Zum Kanalbau', href: '#leistungen' },
+          { label: '💬 Per WhatsApp fragen', href: 'https://wa.me/499417803769', target: '_blank', rel: 'noopener noreferrer' }
+        ]
+      };
+    }
+
+    // 5. Jobs, Baggerfahrer, Karriere
+    if (q.includes('job') || q.includes('karriere') || q.includes('bewerb') || q.includes('baggerfahrer') || q.includes('fahrer') || q.includes('maschinist') || q.includes('straßenbauer') || q.includes('stelle')) {
+      return {
+        text: `Wir suchen aktuell Verstärkung in Regensburg!<br>
+• <strong>Baugeräteführer / Baggerfahrer (m/w/d)</strong> für Ketten- &amp; Mobilbagger<br>
+• <strong>Straßenbauer &amp; Vorarbeiter (m/w/d)</strong><br>
+• <strong>LKW-Fahrer (Klasse CE, Kipper)</strong><br><br>
+Kein Lebenslauf oder Anschreiben nötig – bewerben Sie sich einfach in 60 Sekunden direkt über unser Schnellbewerbungs-Portal!`,
+        actions: [
+          { label: '⚡ In 60s bewerben', href: '#karriere' }
+        ]
+      };
+    }
+
+    // 6. Standort & Öffnungszeiten
+    if (q.includes('standort') || q.includes('adresse') || q.includes('wo') || q.includes('öffnungszeit') || q.includes('zeit') || q.includes('anfahrt') || q.includes('regensburg')) {
+      return {
+        text: `<strong>Firmensitz &amp; Betriebshof:</strong><br>
+Auweg 25, 93055 Regensburg (verkehrsgünstig im Regensburger Osten).<br><br>
+<strong>Betriebs- &amp; Bürozeiten:</strong><br>
+• Montag bis Donnerstag: 07:00 – 17:00 Uhr<br>
+• Freitag: 07:00 – 12:00 Uhr<br>
+• Samstag &amp; Sonntag: Geschlossen`,
+        actions: [
+          { label: '🗺️ Anfahrt anzeigen', href: '#standort-kontakt' },
+          { label: '📞 Direkt anrufen', href: 'tel:+499417803769' }
+        ]
+      };
+    }
+
+    // 7. Fuhrpark & Maschinen
+    if (q.includes('fuhrpark') || q.includes('maschine') || q.includes('kettenbagger') || q.includes('mobilbagger') || q.includes('kipper') || q.includes('walze') || q.includes('technik')) {
+      return {
+        text: `Unser Fuhrpark umfasst ausschließlich moderne Hochleistungsgeräte:<br>
+• <strong>Kettenbagger (18–24t):</strong> Bis 6,50 m Grabtiefe mit 3D-GPS-Steuerung<br>
+• <strong>Allrad-Mobilbagger (14–16t):</strong> Wendig für Stadtbaustellen<br>
+• <strong>Kipperflotte (3- &amp; 4-Achser):</strong> Bis 14 m³ / 22 Tonnen Schüttguttransport<br>
+• <strong>Verdichtungstechnik:</strong> Tandem-Vibrationswalzen &amp; Rüttelplatten bis 100 kN`,
+        actions: [
+          { label: '🚜 Fuhrpark ansehen', href: '#fuhrpark' }
+        ]
+      };
+    }
+
+    // 8. Notfall / Sofortkontakt
+    if (q.includes('not') || q.includes('kontakt') || q.includes('telefon') || q.includes('anruf') || q.includes('nummer') || q.includes('mail') || q.includes('brandl')) {
+      return {
+        text: `Sie erreichen uns werktags telefonisch unter <a href="tel:+499417803769" class="text-amber-400 font-bold underline">0941 / 780 37 69</a>.<br>
+Oder schreiben Sie uns schnell und unkompliziert per WhatsApp – wir melden uns umgehend!`,
+        actions: [
+          { label: '📞 0941 7803769 anrufen', href: 'tel:+499417803769' },
+          { label: '💬 WhatsApp Chat starten', href: 'https://wa.me/499417803769', target: '_blank', rel: 'noopener noreferrer' }
+        ]
+      };
+    }
+
+    // Standard / Intelligenter Fallback
+    return {
+      text: `Vielen Dank für Ihre Frage! Als spezialisierter Meisterbetrieb für Tief-, Straßen- und Kanalbau in Regensburg beraten wir Sie gerne individuell.<br><br>
+Möchten Sie Ihr Projekt mit unserem <strong>4-Schritte-Konfigurator</strong> durchrechnen oder direkt mit Bauleiter Stefan Brandl sprechen?`,
+      actions: [
+        { label: '📐 Projekt online berechnen', href: '#konfigurator' },
+        { label: '📞 0941 7803769 anrufen', href: 'tel:+499417803769' },
+        { label: '💬 Per WhatsApp schreiben', href: 'https://wa.me/499417803769', target: '_blank', rel: 'noopener noreferrer' }
+      ]
+    };
+  }
 
 });
 
@@ -499,3 +748,4 @@ function handleJobSubmit(event) {
   }
   return false;
 }
+
