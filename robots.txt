@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://woehrl-tiefbau.de/sitemap.xml

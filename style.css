@@ -1,0 +1,538 @@
+/* ══════════════════════════════════════════════════════════════
+   WÖHRL TIEFBAU GMBH – DESIGN SYSTEM & CUSTOM STYLING (2025)
+   Farbklima: Industrial Asphalt, Heavy Civil Engineering Slate &
+   Precision Construction Amber / CAT Gold
+   ══════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Basisfarben */
+  --bg-dark: #0c1017;
+  --bg-surface: #141a24;
+  --bg-surface-elevated: #1d2433;
+  --bg-surface-card: rgba(20, 26, 36, 0.82);
+  --bg-surface-card-hover: rgba(29, 36, 51, 0.95);
+  
+  /* Sicherheits- & Akzent-Bernstein (High-Vis Construction Amber) */
+  --accent-amber: #f59e0b;
+  --accent-amber-light: #fbbf24;
+  --accent-amber-dark: #d97706;
+  --accent-amber-glow: rgba(245, 158, 11, 0.28);
+  --accent-amber-subtle: rgba(245, 158, 11, 0.12);
+
+  /* Laser-Vermessung & Präzision (Cyan) */
+  --accent-cyan: #38bdf8;
+  --accent-cyan-glow: rgba(56, 189, 248, 0.25);
+  --accent-cyan-subtle: rgba(56, 189, 248, 0.12);
+
+  /* Gütesiegel / DIN EN 1610 (Green) */
+  --accent-green: #22c55e;
+  --accent-green-glow: rgba(34, 197, 94, 0.25);
+
+  /* Textfarben (WCAG AA & AAA konform) */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  /* Rahmen & Trennlinien */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-amber: rgba(245, 158, 11, 0.35);
+
+  /* Typografie */
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Shadows */
+  --shadow-industrial: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+  --shadow-amber: 0 0 25px rgba(245, 158, 11, 0.22);
+}
+
+/* ── Basis-Resets & Touchpad-Sicherheit ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--bg-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* STRENGSTENS VERBOTEN: scroll-behavior: smooth! (Lenis übernimmt Scrolling) */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Skip-Link für Barrierefreiheit */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 1rem;
+  z-index: 99999;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-amber);
+  color: #000;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ── Typografie Utilities ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Der Split-Type / Gradient-Sicherheits-Fix (§ 0D): Nie unsichtbarer Text! */
+.accent-title-amber {
+  color: var(--accent-amber) !important;
+  -webkit-text-fill-color: var(--accent-amber) !important;
+  text-shadow: 0 0 30px var(--accent-amber-glow);
+  display: inline;
+}
+
+.accent-title-cyan {
+  color: var(--accent-cyan) !important;
+  -webkit-text-fill-color: var(--accent-cyan) !important;
+  text-shadow: 0 0 25px var(--accent-cyan-glow);
+  display: inline;
+}
+
+/* ── Button-Responsiveness & Mobile-Sicherheit (§ 0G) ── */
+button, .btn {
+  max-width: 100%;
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+@media (max-width: 640px) {
+  button, .btn, .btn-cta, .btn-secondary {
+    width: 100%;
+    white-space: normal !important;
+  }
+}
+
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-amber), #d97706);
+  color: #0c1017;
+  font-weight: 700;
+  font-family: var(--font-display);
+  padding: 0.85rem 1.75rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px var(--accent-amber-glow);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(245, 158, 11, 0.45);
+  filter: brightness(1.08);
+}
+
+.btn-cta:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-family: var(--font-display);
+  padding: 0.85rem 1.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-medium);
+  backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-amber);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+/* ── Glassmorphism & Industrial Surfaces ── */
+.glass-panel {
+  background: var(--bg-surface-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  box-shadow: var(--shadow-industrial);
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel-hover:hover {
+  border-color: var(--border-amber);
+  box-shadow: 0 14px 40px -10px rgba(0, 0, 0, 0.8), var(--shadow-amber);
+  transform: translateY(-3px);
+}
+
+/* Warning Stripe Accent für Baustellen-Authentizität */
+.hazard-stripe-top {
+  position: relative;
+  overflow: hidden;
+}
+.hazard-stripe-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--accent-amber),
+    var(--accent-amber) 10px,
+    #1e2532 10px,
+    #1e2532 20px
+  );
+  z-index: 2;
+}
+
+/* ── Header Styling (§ 0B) ── */
+.unified-header {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2rem);
+  max-width: 1360px;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.header-inner {
+  background: rgba(14, 18, 25, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-medium);
+  border-radius: 9999px;
+  padding: 0.65rem 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Mobile Menü Overlay */
+.mobile-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 20, 0.96);
+  backdrop-filter: blur(24px);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-nav-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Hero Bühne ── */
+.hero-visual-frame {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9);
+}
+
+.hero-visual-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 16, 23, 0.2) 0%,
+    rgba(12, 16, 23, 0.6) 60%,
+    rgba(12, 16, 23, 0.95) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Interaktiver Konfigurator ── */
+.configurator-tab-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.configurator-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.configurator-tab-btn.active {
+  background: var(--accent-amber-subtle);
+  border-color: var(--accent-amber);
+  color: var(--accent-amber);
+  box-shadow: 0 0 20px var(--accent-amber-glow);
+}
+
+/* Range Slider Styling */
+.range-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 9999px;
+  background: #1e2633;
+  outline: none;
+  margin: 1rem 0;
+}
+
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-amber);
+  cursor: pointer;
+  border: 3px solid #0c1017;
+  box-shadow: 0 0 15px var(--accent-amber);
+  transition: transform 0.15s ease;
+}
+
+.range-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.range-slider::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-amber);
+  cursor: pointer;
+  border: 3px solid #0c1017;
+  box-shadow: 0 0 15px var(--accent-amber);
+}
+
+/* Checkbox Card Selector */
+.option-card {
+  position: relative;
+  cursor: pointer;
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.option-card:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.option-card.selected {
+  border-color: var(--accent-amber);
+  background: var(--accent-amber-subtle);
+}
+
+/* ── Vorher-Nachher Slider ── */
+.ba-slider-container {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border-medium);
+  box-shadow: var(--shadow-industrial);
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .ba-slider-container {
+    height: 320px;
+  }
+}
+
+.ba-slider-image-before,
+.ba-slider-image-after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ba-slider-image-before img,
+.ba-slider-image-after img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ba-slider-image-before {
+  width: 50%;
+  overflow: hidden;
+  z-index: 2;
+  border-right: 3px solid var(--accent-amber);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.ba-slider-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-amber);
+  color: #0c1017;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 0 20px var(--accent-amber);
+  cursor: ew-resize;
+  pointer-events: none;
+}
+
+/* ── Modals & Cookie Banner ── */
+.legal-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 11, 16, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.legal-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.legal-modal-content {
+  background: #121721;
+  border: 1px solid var(--border-medium);
+  border-radius: 20px;
+  max-width: 860px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8);
+  position: relative;
+  padding: 2.5rem;
+}
+
+@media (max-width: 640px) {
+  .legal-modal-content {
+    padding: 1.5rem;
+  }
+}
+
+/* Cookie Banner */
+.cookie-banner {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  max-width: 480px;
+  width: calc(100% - 3rem);
+  background: rgba(16, 21, 30, 0.95);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border-medium);
+  border-radius: 18px;
+  padding: 1.5rem;
+  z-index: 9998;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+  transform: translateY(150%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cookie-banner.visible {
+  transform: translateY(0);
+}
+
+/* WhatsApp Floating Widget */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 990;
+  background: #25D366;
+  color: #fff;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 25px rgba(37, 211, 102, 0.45);
+  transition: all 0.25s ease;
+  text-decoration: none;
+}
+
+.floating-whatsapp:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.65);
+}
+
+/* Custom Scrollbar für Modal */
+.legal-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+.legal-modal-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+.legal-modal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+.legal-modal-content::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-amber);
+}
