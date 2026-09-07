@@ -9,6 +9,7 @@
 * [x] **Eigenständige Farb- & Markenwelt:** Industrial Asphalt (`#0c1017`), Heavy Slate (`#141a24`), Baustellen-Amber (`#f59e0b`), Vermessungs-Laser-Cyan (`#38bdf8`) und DIN-Zertifizierungs-Grün (`#22c55e`).
 * [x] **Typografie:** `Outfit` (Headings mit meisterlicher Wucht), `Inter` (hoher Kontrast und Lesbarkeit), `JetBrains Mono` (technische Daten, DIN-Normen, Kubatur-Zahlen).
 * [x] **Kein Einheits-Look:** Keine austauschbare Kachel-Optik, sondern haptisches Baustellen-Feeling mit echten Liebherr- und Baustellen-Fotografien in 16:9.
+* [x] **Favicon & App-Icons:** Individuelle Vektor-`favicon.svg` mit dem Firmen-Emblem und Baustellen-Amber erstellt und im `<head>` für Browser und iOS verlinkt.
 
 ## 3. Responsive & Touchpad-Sicherheit
 * [x] **Kein `scroll-behavior: smooth` im CSS:** Lenis Physik-Engine läuft ruckelfrei auf Mac-Trackpads und Windows Precision Touchpads.
