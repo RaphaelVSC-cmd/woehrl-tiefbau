@@ -11,7 +11,7 @@
   --bg-surface-elevated: #1d2433;
   --bg-surface-card: rgba(20, 26, 36, 0.82);
   --bg-surface-card-hover: rgba(29, 36, 51, 0.95);
-  
+
   /* Sicherheits- & Akzent-Bernstein (High-Vis Construction Amber) */
   --accent-amber: #f59e0b;
   --accent-amber-light: #fbbf24;
@@ -32,7 +32,7 @@
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  
+
   /* Rahmen & Trennlinien */
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-medium: rgba(255, 255, 255, 0.15);
@@ -49,7 +49,9 @@
 }
 
 /* ── Basis-Resets & Touchpad-Sicherheit ── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -86,12 +88,18 @@ body {
   text-decoration: none;
   transition: top 0.2s ease;
 }
+
 .skip-link:focus {
   top: 1rem;
 }
 
 /* ── Typografie Utilities ── */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   letter-spacing: -0.02em;
   color: var(--text-primary);
@@ -117,14 +125,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ── Button-Responsiveness & Mobile-Sicherheit (§ 0G) ── */
-button, .btn {
+button,
+.btn {
   max-width: 100%;
   box-sizing: border-box;
   word-break: break-word;
 }
 
 @media (max-width: 640px) {
-  button, .btn, .btn-cta, .btn-secondary {
+
+  button,
+  .btn,
+  .btn-cta,
+  .btn-secondary {
     width: 100%;
     white-space: normal !important;
   }
@@ -203,6 +216,7 @@ button, .btn {
   position: relative;
   overflow: hidden;
 }
+
 .hazard-stripe-top::before {
   content: '';
   position: absolute;
@@ -210,13 +224,11 @@ button, .btn {
   left: 0;
   right: 0;
   height: 4px;
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--accent-amber),
-    var(--accent-amber) 10px,
-    #1e2532 10px,
-    #1e2532 20px
-  );
+  background: repeating-linear-gradient(-45deg,
+      var(--accent-amber),
+      var(--accent-amber) 10px,
+      #1e2532 10px,
+      #1e2532 20px);
   z-index: 2;
 }
 
@@ -282,12 +294,10 @@ button, .btn {
 .hero-overlay-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(12, 16, 23, 0.2) 0%,
-    rgba(12, 16, 23, 0.6) 60%,
-    rgba(12, 16, 23, 0.95) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(12, 16, 23, 0.2) 0%,
+      rgba(12, 16, 23, 0.6) 60%,
+      rgba(12, 16, 23, 0.95) 100%);
   pointer-events: none;
 }
 
@@ -498,115 +508,111 @@ button, .btn {
   transform: translateY(0);
 }
 
-/* WhatsApp Floating Widget */
+/* WhatsApp Floating Widget (Oben rechts, über dem KI-Button gestackt) */
 .floating-whatsapp {
   position: fixed;
-  bottom: 2rem;
-  left: 2rem;
+  bottom: 5.5rem;
+  right: 1.5rem;
   z-index: 990;
   background: #25D366;
   color: #fff;
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 25px rgba(37, 211, 102, 0.45);
-  transition: all 0.25s ease;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-decoration: none;
+  contain: layout style;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 .floating-whatsapp:hover {
-  transform: scale(1.1);
-  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.65);
-}
-
-/* Custom Scrollbar für Modal */
-.legal-modal-content::-webkit-scrollbar {
-  width: 8px;
-}
-.legal-modal-content::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.04);
-}
-.legal-modal-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-}
-.legal-modal-content::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-amber);
+  transform: translate3d(0, -2px, 0) scale(1.05);
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.65);
 }
 
 /* ══════════════════════════════════════════════════════════════
-   KI-ASSISTENT & CHAT WIDGET
+   KI-ASSISTENT TRIGGER & CHAT WINDOW (Rock-Solid & Flicker-Free)
    ══════════════════════════════════════════════════════════════ */
 .ai-assistant-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
   z-index: 990;
-  background: linear-gradient(135deg, rgba(26, 32, 44, 0.95), rgba(14, 18, 25, 0.95));
+  background: linear-gradient(135deg, rgba(22, 28, 40, 0.97), rgba(13, 17, 24, 0.98));
   border: 1.5px solid var(--accent-amber);
   color: #fff;
-  padding: 0.65rem 1.15rem;
+  height: 48px;
+  padding: 0 1.15rem;
   border-radius: 9999px;
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 20px var(--accent-amber-glow);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 20px var(--accent-amber-glow);
   cursor: pointer;
-  backdrop-filter: blur(16px);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
+  contain: layout style;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .ai-assistant-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.75), 0 0 28px rgba(245, 158, 11, 0.45);
+  transform: translate3d(0, -2px, 0);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.8), 0 0 28px rgba(245, 158, 11, 0.4);
   border-color: #fbbf24;
 }
 
+/* Chat Fenster - Öffnet mit z-index 10001 über dem WhatsApp-Button und allen Page-Elementen */
 .ai-chat-window {
   position: fixed;
-  bottom: 5.5rem;
-  right: 2rem;
-  width: 400px;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 410px;
   max-width: calc(100vw - 2rem);
-  height: 580px;
-  max-height: calc(100vh - 7rem);
-  background: rgba(13, 17, 24, 0.97);
-  backdrop-filter: blur(28px);
-  -webkit-backdrop-filter: blur(28px);
+  height: 600px;
+  max-height: calc(100vh - 3rem);
+  background: rgba(14, 18, 27, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-amber);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  z-index: 995;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 0, 0, 0.5);
-  transform: scale(0.92) translateY(20px);
+  z-index: 10001;
+  box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.95), 0 0 35px rgba(245, 158, 11, 0.15);
+  contain: layout style;
+  backface-visibility: hidden;
+  transform: translate3d(0, 20px, 0) scale(0.96);
   opacity: 0;
   pointer-events: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
 }
 
 .ai-chat-window.active {
-  transform: scale(1) translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
   opacity: 1;
   pointer-events: auto;
 }
 
+/* Responsive Mobile Layout (Bottom Sheet) */
 @media (max-width: 640px) {
-  .ai-assistant-btn {
-    bottom: 1.25rem;
-    right: 1.25rem;
-    padding: 0.55rem 0.9rem;
-  }
   .floating-whatsapp {
-    bottom: 1.25rem;
-    left: 1.25rem;
-    width: 50px;
-    height: 50px;
+    bottom: 4.5rem;
+    right: 1rem;
+    width: 46px;
+    height: 46px;
+  }
+  .ai-assistant-btn {
+    bottom: 1rem;
+    right: 1rem;
+    height: 44px;
+    padding: 0 0.9rem;
   }
   .ai-chat-window {
     bottom: 0;
@@ -614,27 +620,50 @@ button, .btn {
     right: 0;
     width: 100%;
     max-width: 100%;
-    height: 85vh;
-    max-height: 85vh;
-    border-radius: 20px 20px 0 0;
+    height: 86vh;
+    max-height: 86vh;
+    border-radius: 22px 22px 0 0;
     border-bottom: none;
+    border-left: none;
+    border-right: none;
+    z-index: 10002;
+    transform: translate3d(0, 100%, 0);
+  }
+  .ai-chat-window.active {
+    transform: translate3d(0, 0, 0);
   }
 }
 
 .ai-chat-header {
-  padding: 1rem 1.25rem;
-  background: rgba(20, 26, 36, 0.95);
+  padding: 0.9rem 1.2rem;
+  background: rgba(22, 28, 40, 0.98);
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.ai-drag-handle {
+  display: none;
+}
+@media (max-width: 640px) {
+  .ai-drag-handle {
+    display: block;
+    width: 40px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 9999px;
+    margin: -0.3rem auto 0.5rem auto;
+  }
 }
 
 .ai-faq-bar {
-  background: rgba(16, 21, 30, 0.9);
+  background: rgba(17, 22, 32, 0.95);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0.65rem 1rem;
+  padding: 0.6rem 1rem;
   font-size: 0.75rem;
+  flex-shrink: 0;
 }
 
 .ai-faq-toggle-btn {
@@ -643,11 +672,12 @@ button, .btn {
   justify-content: space-between;
   width: 100%;
   color: var(--accent-amber);
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   background: transparent;
   border: none;
   padding: 0;
+  text-align: left;
 }
 
 .ai-faq-chips {
@@ -655,7 +685,9 @@ button, .btn {
   flex-wrap: wrap;
   gap: 0.4rem;
   margin-top: 0.5rem;
-  transition: all 0.25s ease;
+  max-height: 160px;
+  overflow-y: auto;
+  transition: all 0.2s ease;
 }
 
 .ai-faq-chips.collapsed {
@@ -667,11 +699,12 @@ button, .btn {
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   border-radius: 9999px;
-  padding: 0.3rem 0.7rem;
-  font-size: 0.7rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.72rem;
   cursor: pointer;
   transition: all 0.15s ease;
   text-align: left;
+  line-height: 1.3;
 }
 
 .ai-faq-chip:hover {
@@ -687,30 +720,35 @@ button, .btn {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  contain: layout;
 }
 
 .ai-msg {
-  max-width: 85%;
-  padding: 0.75rem 1rem;
+  max-width: 90%;
+  padding: 0.8rem 1.05rem;
   border-radius: 14px;
-  font-size: 0.82rem;
-  line-height: 1.45;
+  font-size: 0.83rem;
+  line-height: 1.5;
   word-break: break-word;
 }
 
 .ai-msg-assistant {
   align-self: flex-start;
-  background: rgba(26, 33, 46, 0.85);
+  background: rgba(24, 31, 44, 0.95);
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   border-bottom-left-radius: 4px;
+}
+
+.ai-msg-assistant strong {
+  color: #fff;
 }
 
 .ai-msg-user {
   align-self: flex-end;
   background: linear-gradient(135deg, var(--accent-amber), #d97706);
   color: #0c1017;
-  font-weight: 500;
+  font-weight: 600;
   border-bottom-right-radius: 4px;
 }
 
@@ -718,19 +756,19 @@ button, .btn {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
 }
 
 .ai-quick-action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.35rem;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
   color: var(--accent-amber);
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.25rem 0.6rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.3rem 0.65rem;
   border-radius: 6px;
   text-decoration: none;
   cursor: pointer;
@@ -746,8 +784,8 @@ button, .btn {
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 0.6rem 0.9rem;
-  background: rgba(26, 33, 46, 0.85);
+  padding: 0.65rem 0.95rem;
+  background: rgba(24, 31, 44, 0.95);
   border-radius: 12px;
   width: fit-content;
 }
@@ -769,20 +807,22 @@ button, .btn {
 
 .ai-chat-input-area {
   padding: 0.85rem 1rem;
-  background: rgba(18, 23, 32, 0.95);
+  background: rgba(20, 26, 36, 0.98);
   border-top: 1px solid var(--border-subtle);
   display: flex;
   gap: 0.5rem;
+  flex-shrink: 0;
+  padding-bottom: max(0.85rem, env(safe-area-inset-bottom));
 }
 
 .ai-chat-input {
   flex: 1;
-  background: rgba(10, 14, 20, 0.8);
+  background: rgba(11, 15, 22, 0.85);
   border: 1px solid var(--border-medium);
   border-radius: 10px;
-  padding: 0.6rem 0.85rem;
+  padding: 0.65rem 0.9rem;
   color: #fff;
-  font-size: 0.82rem;
+  font-size: 0.83rem;
   outline: none;
   transition: border-color 0.2s ease;
 }
@@ -796,17 +836,43 @@ button, .btn {
   color: #0c1017;
   border: none;
   border-radius: 10px;
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  shrink: 0;
+  flex-shrink: 0;
 }
 
 .ai-chat-send-btn:hover {
   background: #fbbf24;
   transform: scale(1.05);
+}
+
+/* Custom Scrollbar für Modal & Chat */
+.legal-modal-content::-webkit-scrollbar,
+.ai-chat-messages::-webkit-scrollbar,
+.ai-faq-chips::-webkit-scrollbar {
+  width: 6px;
+}
+
+.legal-modal-content::-webkit-scrollbar-track,
+.ai-chat-messages::-webkit-scrollbar-track,
+.ai-faq-chips::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.legal-modal-content::-webkit-scrollbar-thumb,
+.ai-chat-messages::-webkit-scrollbar-thumb,
+.ai-faq-chips::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.legal-modal-content::-webkit-scrollbar-thumb:hover,
+.ai-chat-messages::-webkit-scrollbar-thumb:hover,
+.ai-faq-chips::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-amber);
 }
