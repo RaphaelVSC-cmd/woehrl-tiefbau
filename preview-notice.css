@@ -1,0 +1,285 @@
+/* ==========================================================================
+   Nexbot Webdesign – Portfolio Preview & Legal Notice Styles
+   ========================================================================== */
+
+:root {
+  --pn-bg: rgba(15, 23, 42, 0.92);
+  --pn-border: rgba(255, 255, 255, 0.14);
+  --pn-text-main: #f8fafc;
+  --pn-text-muted: #94a3b8;
+  --pn-accent: #3b82f6;
+  --pn-accent-hover: #2563eb;
+  --pn-radius: 18px;
+}
+
+/* --------------------------------------------------------------------------
+   Floating Notice Toast (Bottom Right)
+   -------------------------------------------------------------------------- */
+#nexbot-preview-toast {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 999999 !important;
+  max-width: 420px !important;
+  width: calc(100% - 40px) !important;
+  background: var(--pn-bg) !important;
+  border: 1px solid var(--pn-border) !important;
+  border-radius: var(--pn-radius) !important;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6),
+              0 0 0 1px rgba(255, 255, 255, 0.06),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  padding: 18px 20px !important;
+  box-sizing: border-box !important;
+  color: var(--pn-text-main) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  opacity: 0;
+  transform: translateY(20px) scale(0.97);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  pointer-events: none;
+}
+
+#nexbot-preview-toast.pn-visible {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  pointer-events: auto !important;
+}
+
+.pn-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 8px !important;
+}
+
+.pn-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 3px 10px !important;
+  background: rgba(59, 130, 246, 0.15) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+  border-radius: 9999px !important;
+  color: #60a5fa !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+}
+
+.pn-pulse {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background-color: #3b82f6 !important;
+  box-shadow: 0 0 6px #3b82f6 !important;
+  animation: pnPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite !important;
+}
+
+@keyframes pnPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.pn-close-btn {
+  background: none !important;
+  border: none !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+  padding: 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+.pn-close-btn:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.pn-title {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin: 0 0 4px 0 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.pn-body {
+  color: var(--pn-text-muted) !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  margin: 0 0 12px 0 !important;
+}
+
+.pn-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.pn-btn-primary {
+  padding: 7px 14px !important;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3) !important;
+}
+
+.pn-btn-primary:hover {
+  background: linear-gradient(135deg, #60a5fa 0%, #1d4ed8 100%) !important;
+  transform: translateY(-1px) !important;
+}
+
+.pn-btn-secondary {
+  background: none !important;
+  border: none !important;
+  color: #94a3b8 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  padding: 6px 8px !important;
+  transition: color 0.15s ease !important;
+}
+
+.pn-btn-secondary:hover {
+  color: #ffffff !important;
+}
+
+/* --------------------------------------------------------------------------
+   Subtle Permanent Re-open Pill (Bottom-Right corner)
+   -------------------------------------------------------------------------- */
+#nexbot-preview-pill {
+  position: fixed !important;
+  bottom: 16px !important;
+  left: 16px !important;
+  right: auto !important;
+  z-index: 99998 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 12px !important;
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 9999px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: #94a3b8 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 11.5px !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+  user-select: none !important;
+  transition: all 0.2s ease !important;
+}
+
+#nexbot-preview-pill:hover {
+  color: #ffffff !important;
+  background: rgba(15, 23, 42, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Full Legal Modal
+   -------------------------------------------------------------------------- */
+#nexbot-legal-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+  background: rgba(5, 8, 15, 0.8) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+#nexbot-legal-modal.pn-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.pn-modal-card {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 540px !important;
+  max-height: 88vh !important;
+  overflow-y: auto !important;
+  background: rgba(15, 23, 42, 0.96) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 20px !important;
+  padding: 28px 28px 24px !important;
+  box-sizing: border-box !important;
+  color: #f8fafc !important;
+  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.8),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.pn-modal-title {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin: 0 0 14px 0 !important;
+}
+
+.pn-modal-section {
+  margin-bottom: 14px !important;
+  font-size: 12.5px !important;
+  line-height: 1.55 !important;
+  color: #cbd5e1 !important;
+}
+
+.pn-modal-section strong {
+  color: #ffffff !important;
+  display: block !important;
+  margin-bottom: 3px !important;
+  font-size: 13px !important;
+}
+
+.pn-modal-footer {
+  margin-top: 20px !important;
+  padding-top: 14px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+@media (max-width: 480px) {
+  #nexbot-preview-toast {
+    bottom: 12px !important;
+    right: 12px !important;
+    width: calc(100% - 24px) !important;
+    padding: 16px !important;
+  }
+  .pn-modal-card {
+    padding: 20px 18px !important;
+  }
+  #nexbot-preview-pill {
+    bottom: 12px !important;
+    left: 12px !important;
+    right: auto !important;
+  }
+}
